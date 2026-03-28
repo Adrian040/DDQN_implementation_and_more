@@ -1,3 +1,0 @@
-global_step,eval_mean_return,eval_std_return
-5000,0.6,0.48989794855663565
-10000,0.6,0.48989794855663565
