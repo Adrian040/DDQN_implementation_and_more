@@ -1,0 +1,18 @@
+{
+  "env": "minatar",
+  "seed": 3,
+  "total_steps": 200000,
+  "eval_every": 20000,
+  "eval_episodes": 10,
+  "run_name": null,
+  "gamma": 0.99,
+  "lr": 0.0001,
+  "batch_size": 64,
+  "buffer_size": 100000,
+  "learning_starts": 10000,
+  "target_update_interval": 1000,
+  "train_freq": 4,
+  "eps_start": 1.0,
+  "eps_end": 0.05,
+  "eps_decay_steps": 100000
+}
