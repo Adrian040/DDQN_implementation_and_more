@@ -1,0 +1,12 @@
+torch
+torchvision
+torchaudio
+gymnasium[atari]
+ale-py
+MinAtar
+stable-baselines3
+numpy
+pandas
+scipy
+matplotlib
+scikit-posthocs
