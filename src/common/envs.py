@@ -15,6 +15,8 @@ except ImportError:
     def apply_frame_stack(env: gym.Env, num_stack: int) -> gym.Env:
         return FrameStack(env, num_stack)
 
+from minatar.environment import Environment as MinAtarEnvironment
+
 
 class ChannelFirstObsWrapper(gym.ObservationWrapper):
     def __init__(self, env: gym.Env):
@@ -41,6 +43,60 @@ class ChannelFirstObsWrapper(gym.ObservationWrapper):
         return obs.astype(np.uint8)
 
 
+class MinAtarGymWrapper(gym.Env):
+    metadata = {"render_modes": ["human"], "render_fps": 20}
+
+    def __init__(self, game_name: str = "breakout", seed: int | None = None, use_minimal_actions: bool = True):
+        super().__init__()
+
+        self.game = MinAtarEnvironment(game_name)
+        if seed is not None:
+            self.game.seed(seed)
+
+        self.use_minimal_actions = use_minimal_actions
+
+        obs_shape = self.game.state_shape()  # (H, W, C)
+        self.observation_space = gym.spaces.Box(
+            low=0,
+            high=1,
+            shape=obs_shape,
+            dtype=np.uint8,
+        )
+
+        if use_minimal_actions:
+            self._action_set = list(self.game.minimal_action_set())
+            self.action_space = gym.spaces.Discrete(len(self._action_set))
+        else:
+            self._action_set = list(range(self.game.num_actions()))
+            self.action_space = gym.spaces.Discrete(self.game.num_actions())
+
+    def reset(self, *, seed: int | None = None, options=None):
+        if seed is not None:
+            self.game.seed(seed)
+        self.game.reset()
+        obs = self.game.state().astype(np.uint8)
+        info = {}
+        return obs, info
+
+    def step(self, action):
+        a = self._action_set[int(action)]
+        reward, terminal = self.game.act(a)
+        obs = self.game.state().astype(np.uint8)
+        terminated = bool(terminal)
+        truncated = False
+        info = {}
+        return obs, float(reward), terminated, truncated, info
+
+    def render(self):
+        self.game.display_state(50)
+
+    def close(self):
+        try:
+            self.game.close_display()
+        except Exception:
+            pass
+
+
 class MinAtarObsWrapper(gym.ObservationWrapper):
     def __init__(self, env: gym.Env):
         super().__init__(env)
@@ -58,11 +114,10 @@ class MinAtarObsWrapper(gym.ObservationWrapper):
 
 
 def make_minatar_breakout(seed: int | None = None) -> gym.Env:
-    env = gym.make("MinAtar/Breakout-v1")
+    env = MinAtarGymWrapper(game_name="breakout", seed=seed, use_minimal_actions=True)
     env = MinAtarObsWrapper(env)
     env = RecordEpisodeStatistics(env)
     if seed is not None:
-        env.reset(seed=seed)
         env.action_space.seed(seed)
     return env
 

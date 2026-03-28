@@ -19,8 +19,8 @@ import argparse
 import numpy as np
 import torch
 
-from ppo_envs import make_minatar_breakout, make_atari_breakout
-from nes_ga_agent import (
+from src.common.envs import make_minatar_breakout, make_atari_breakout
+from src.evolutionary.nes_ga_agent import (
     set_global_seed,
     PolicyNetwork,
     set_params_from_vector,
@@ -30,7 +30,6 @@ from nes_ga_agent import (
     NESConfig,
     GAConfig,
 )
-
 
 def make_env(env_name: str, seed: int):
     if env_name == "minatar":
