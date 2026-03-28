@@ -1,6 +1,6 @@
 # Ignorar la carpeta results y todo su contenido
-results/
-analysis_outputs/
+#results/
+#analysis_outputs/
 
 # Ignorar todas las carpetas llamadas __pycache__ en cualquier nivel
 **/__pycache__/
