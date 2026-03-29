@@ -12,6 +12,8 @@ Se implementan y comparan los siguientes métodos:
 - PPO oficial de Stable-Baselines3
 - NES
 - GA
+  
+Dichas implementaciones se encuentran en la carpeta ```src/```
 
 ## Problemas considerados
 
