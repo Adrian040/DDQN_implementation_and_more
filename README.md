@@ -95,4 +95,4 @@ Por ello, la comparación correspondiente se realiza entre:
 
 ## Reproducibilidad
 
-Se recomienda utilizar el notebook Colab_RL_Homework.ipynb, el cual clona este repositorio, instala dependencias y ejecuta los experimentos principales.
+Se recomienda utilizar el notebook Tarea_3_RL.ipynb, el cual clona este repositorio, instala dependencias y ejecuta los experimentos principales.
