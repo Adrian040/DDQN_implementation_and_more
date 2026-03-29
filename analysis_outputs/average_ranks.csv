@@ -1,0 +1,7 @@
+method,avg_rank
+sb3_dqn,2.125
+sb3_ppo,2.8125
+ddqn,3.2
+ppo,4.25
+ga,5.9375
+nes,6.35
